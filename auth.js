@@ -372,29 +372,38 @@
       .forEach((el) => (el.style.display = authed ? "none" : ""));
   }
 
-  function enforceHttps() {
-    if (window.location.protocol !== "https:" &&
-      window.location.hostname !== "localhost" &&
-      window.location.hostname !== "127.0.0.1") {
-      // In production, redirect to HTTPS
-      if (process.env.NODE_ENV === "production") {
-        window.location.protocol = "https:";
-      } else {
-        console.warn("⚠️ WARNING: Using HTTP in non-local environment. Switch to HTTPS for security.");
-      }
-    }
+  // Login with email + password
+  async function login(email, password){
+    const c = ensureClient();
+    if (!c) throw new Error('Supabase not available');
+    const { data, error } = await c.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    return data;
   }
 
-  window.XAYTHEON_AUTH = {
-    login,
-    register,
-    logout,
-    isAuthenticated,
-    authenticatedFetch,
-    refreshAccessToken,
-    getSession,
-    ensureClient: () => null
-  };
+  // Sign up with email + password
+  async function signup(email, password){
+    const c = ensureClient();
+    if (!c) throw new Error('Supabase not available');
+    const { data, error } = await c.auth.signUp({ email, password });
+    if (error) throw error;
+    return data;
+  }
+
+  // Expose a helper for login page to trigger magic link
+  async function sendMagicLink(email){
+    const c = ensureClient();
+    if (!c) throw new Error('Supabase not available');
+    const redirectTo = computeRedirectTo();
+    const { error } = await c.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: redirectTo }
+    });
+    if (error) throw error;
+    return true;
+  }
+
+  window.XAYTHEON_AUTH = { ensureClient, getSession, handleAuthState, sendMagicLink, login, signup };
 
   window.addEventListener("DOMContentLoaded", async () => {
     enforceHttps();
