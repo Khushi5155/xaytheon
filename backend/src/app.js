@@ -125,6 +125,7 @@ app.use("/api/user", userRoutes);
 
 /* ========================
    ERROR HANDLING
+   */
 
 app.use((err, req, res, next) => {
   console.error("Error:", err);
