@@ -10,6 +10,15 @@ let isAutoRotating = true;
 let parallaxEnabled = true;
 let targetOrbitOffset = { x: 0, y: 0 };
 let currentOrbitOffset = { x: 0, y: 0 };
+// Lifecycle flags and handles
+let _isInitialized = false; // ensure init runs once
+let _listenersAttached = false; // ensure listeners attach once
+let _interactiveAttached = false; // ensure interactive effects attach once
+let _animationId = null;
+let _lastRaycast = 0; // timestamp for throttlin raycast
+const RAYCAST_MIN_INTERVAL = 60;
+let lastCanvasRect = null;
+let lastCursorState = "default";
 
 // ===================== SHAPES =====================
 const shapes = {
@@ -37,9 +46,10 @@ function init() {
     alpha: true,
   });
   renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.setClearColor(0x000000, 0); // keep transparent
 
   setupLighting();
 
@@ -130,7 +140,16 @@ function disposeObject(obj) {
 
 // ===================== THEME =====================
 function saveTheme(theme) {
-  localStorage.setItem("xaytheon:theme", theme);
+  try {
+    localStorage.setItem("xaytheon:theme", theme);
+
+    // Sync with backend if logged in
+    if (window.XAYTHEON_AUTH && window.XAYTHEON_AUTH.isAuthenticated()) {
+      window.XAYTHEON_AUTH.savePreferences({ theme });
+    }
+  } catch (e) {
+    console.warn("Could not save theme:", e);
+  }
 }
 
 // ===================== GITHUB API =====================
