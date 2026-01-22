@@ -18,7 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.8.0/fonts/remixicon.css" rel="stylesheet" />
     <!-- Supabase SDK & auth bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.44.4/dist/umd/supabase.min.js"></script>
-    <script src="theme.js"></script>
+   
     <script defer src="auth.js"></script>
     <script defer src="i18n.js"></script>
     <script defer src="pwa.js"></script>
@@ -189,7 +189,8 @@
     <script src="boilerplate/boilerplate-loader.js"></script>
     <!-- Our custom script -->
     <script src="script.js"></script>
-    <script>
+     <script src="theme.js"></script>
+    <!-- <script>
     fetch('navbar.html')
         .then(response => response.text())
         .then(data => {
@@ -199,7 +200,27 @@
             if (typeof initNavbar === "function") initNavbar();
         })
         .catch(error => console.error('Error loading navbar:', error));
-</script>
+</script> -->
+<!-- <script>
+fetch('navbar.html')
+    .then(response => response.text())
+    .then(data => {
+        // We inject the navbar into the placeholder
+        // Note: Check if your ID is 'header-placeholder' or 'navbar-placeholder'
+        // In your HTML you have 'header-placeholder', in your script you have 'navbar-placeholder'
+        const placeholder = document.getElementById('header-placeholder') || document.getElementById('navbar-placeholder');
+        if(placeholder) placeholder.innerHTML = data;
+
+        // --- ADD THIS LINE ---
+        // This tells theme.js to re-scan for the newly added buttons
+        if (typeof window.setupThemeToggles === "function") {
+            window.setupThemeToggles();
+        }
+
+        if (typeof initNavbar === "function") initNavbar();
+    })
+    .catch(error => console.error('Error loading navbar:', error));
+</script> -->
 
 </body>
 
