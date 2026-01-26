@@ -1,0 +1,131 @@
+/* =========================
+   PRIVACY PAGE LAYOUT
+========================= */
+
+.privacy-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  color: var(--text-primary);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.privacy-hero {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.privacy-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+}
+
+.privacy-tagline {
+  max-width: 520px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  color: var(--text-tertiary);
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.privacy-section {
+  margin-bottom: 3rem;
+}
+
+.privacy-section h2 {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+.privacy-section h3 {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  margin: 1.5rem 0 0.5rem;
+  color: var(--text-muted);
+}
+
+.privacy-section p {
+  font-size: 0.95rem;
+  color: var(--text-tertiary);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+/* =========================
+   LISTS
+========================= */
+
+.privacy-section ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0 1.25rem;
+}
+
+.privacy-section li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.privacy-section li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent-blue);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+.privacy-section a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.privacy-section a:hover {
+  color: var(--link-hover);
+}
+
+/* =========================
+   FOOTER NOTE
+========================= */
+
+.privacy-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.privacy-footer p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .privacy-page {
+    padding-top: 3rem;
+  }
+
+  .privacy-hero {
+    margin-bottom: 3rem;
+  }
+}
