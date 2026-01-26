@@ -7,8 +7,9 @@
   async function fetchWithTimeout(url, options = {}, timeout = REQUEST_TIMEOUT) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
+
     try {
-      const response = await fetch(resource, {
+      const response = await fetch(url, {
         ...options,
         signal: controller.signal,
       });
@@ -17,11 +18,14 @@
     } catch (err) {
       clearTimeout(timeoutId);
       if (err.name === "AbortError") {
-        throw { code: "TIMEOUT" };
+        const e = new Error("Request timeout");
+        e.code = "TIMEOUT";
+        throw e;
       }
       throw err;
     }
   }
+
 
   let accessToken = null;
   let currentUser = null;
@@ -72,7 +76,12 @@
   function scheduleTokenRefresh() {
     if (refreshTimer) clearTimeout(refreshTimer);
     if (!tokenExpiryTime) return;
-    refreshTimer = setTimeout(refreshAccessToken, tokenExpiryTime - Date.now());
+    const REFRESH_BUFFER = 60 * 1000;
+    refreshTimer = setTimeout(
+      refreshAccessToken,
+      Math.max(0, tokenExpiryTime - Date.now() - REFRESH_BUFFER)
+    );
+
   }
 
   async function refreshAccessToken() {
@@ -142,7 +151,8 @@
         if (refreshed) {
           // Retry request with new token
           headers.Authorization = `Bearer ${getAccessToken()}`;
-          return fetch(url, { ...options, headers, credentials: "include" });
+          return fetchWithTimeout(url, { ...options, headers, credentials: "include" });
+
         }
       }
     }
@@ -150,19 +160,17 @@
     return response;
   }
 
-  function isAuthenticated() {
-    return accessToken !== null;
-  }
+
 
   async function login(email, password) {
-    // Input validation
+    // Input validationfunction isA
     if (!email || typeof email !== 'string' || !password || typeof password !== 'string') {
       throw new Error('Email and password are required');
     }
 
     if (email.length > 254 || password.length > 128) {
       throw new Error('Input data too long');
-    } 
+    }
 
     if (email.length < 3 || password.length < 8) {
       throw new Error('Input data too short');
@@ -236,11 +244,25 @@
         body: JSON.stringify({ email: email.trim(), password }),
       });
 
-     if (!res.ok) {
+      if (!res.ok) {
         // 1. Handle specific HTTP status codes first
-        if (res.status === 409) throw { code: "USER_EXISTS" };
-        if (res.status === 429) throw { code: "TOO_MANY_ATTEMPTS" };
-        if (res.status >= 500) throw { code: "SERVER_ERROR" };
+        if (res.status === 409) {
+          const e = new Error("User already exists");
+          e.code = "USER_EXISTS";
+          throw e;
+        }
+        if (res.status === 429) {
+          const e = new Error("Too many attempts");
+          e.code = "TOO_MANY_ATTEMPTS";
+          throw e;
+        }
+
+        if (res.status >= 500) {
+          const e = new Error("Server error");
+          e.code = "SERVER_ERROR";
+          throw e;
+        }
+
 
         // 2. If it's not a predefined code, try to parse the server's error message
         let errorMessage = "Registration failed";
@@ -401,7 +423,6 @@
   // --- Init ---
 
   window.addEventListener("DOMContentLoaded", async () => {
-    enforceHttps();
     await restoreSession();
     renderAuthArea();
     applyAuthGating();
@@ -409,6 +430,7 @@
 
   window.addEventListener("beforeunload", () => {
     // Optional cleanup
+    
   });
 
   // Attach additional methods (Forgot Password, etc.)
@@ -438,8 +460,16 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, newPassword }),
       });
-      const data = await response.json();
+
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        data = { message: response.statusText };
+      }
+
       if (!response.ok) throw new Error(data.message || "Failed to reset password");
+
       return data;
     } catch (error) {
       console.error("Reset password error:", error);
@@ -463,15 +493,3 @@
   };
 
 })();
-
-function getAuthErrorMessage(error) {
-  if (!error) return "Something went wrong. Please try again.";
-  if (error.message === "Failed to fetch") return "Network error. Please check your internet connection.";
-  switch (error.code) {
-    case "INVALID_CREDENTIALS": return "Invalid email or password.";
-    case "USER_EXISTS": return "User already exists. Please log in.";
-    case "UNAUTHORIZED": return "You are not authorized. Please login again.";
-    case "SESSION_EXPIRED": return "Your session has expired. Please login again.";
-    default: return error.message || "Authentication failed.";
-  }
-}

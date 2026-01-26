@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="style.css" />
   <script src="boilerplate/boilerplate-loader.js"></script>
-  
+
 
   <style>
     body {
@@ -203,11 +203,12 @@
 
       <form id="register-form" class="auth-form">
         <label for="reg-email">Email</label>
-        <input id="reg-email" name="email" type="email" autocomplete="email" required placeholder="Enter your email"/>
+        <input id="reg-email" name="email" type="email" autocomplete="email" required placeholder="Enter your email" />
 
 
         <label for="reg-password">Password</label>
-        <input id="reg-password" name="password" type="password" autocomplete="new-password" required placeholder="Enter a secure password" />
+        <input id="reg-password" name="password" type="password" autocomplete="new-password" required
+          placeholder="Enter a secure password" />
 
 
         <div class="auth-actions">
@@ -311,18 +312,27 @@
     passwordEl.addEventListener("input", clearErrors);
 
     function getAuthErrorMessage(err) {
-  if (!err) return "Something went wrong. Please try again.";
+      if (!err) return "Something went wrong. Please try again.";
 
-  // If backend sends JSON error
-  if (err.message) return err.message;
+      if (err.code === "USER_EXISTS") {
+        return "An account with this email already exists.";
+      }
 
-  // If using error codes
-  if (err.code === "USER_EXISTS") return "An account with this email already exists.";
-  if (err.code === "INVALID_EMAIL") return "Please enter a valid email address.";
-  if (err.code === "WEAK_PASSWORD") return "Password does not meet security requirements.";
+      if (err.code === "TOO_MANY_ATTEMPTS") {
+        return "Too many attempts. Please wait and try again.";
+      }
 
-  return "Registration failed. Please try again later.";
-}
+      if (err.code === "TIMEOUT") {
+        return "Request timed out. Please check your connection.";
+      }
+
+      if (err.message) {
+        return err.message;
+      }
+
+      return "Registration failed. Please try again later.";
+    }
+
 
 
     form.addEventListener("submit", async (e) => {
@@ -364,8 +374,17 @@
       setLoading(true);
 
       try {
+        if (!window.XAYTHEON_AUTH?.register) {
+          setLoading(false);
+          showError("Authentication service unavailable. Please try again later.");
+          return;
+        }
+
         await window.XAYTHEON_AUTH.register(email, password);
-        showSuccess("Account created successfully! Redirecting to login...");
+
+        setLoading(false);
+        showSuccess("Account created successfully! Redirecting...");
+
         setTimeout(() => {
           window.location.href = "login.html";
         }, 1500);
@@ -385,11 +404,7 @@
 
     });
   </script>
-<div id="footer-placeholder"></div>
+  <div id="footer-placeholder"></div>
 
 
 </html>
-
-
-
-
