@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentiment Analysis Dashboard — XAYTHEON</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="terms.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <!-- Supabase SDK & Auth -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.44.4/dist/umd/supabase.min.js"></script>
+    <script defer src="auth.js"></script>
+    <script defer src="i18n.js"></script>
+
+    <!-- Chart.js & html2canvas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body class="eightgon-page">
+    <div class="page-wrapper">
+        <div id="header-placeholder"></div>
+        <main class="terms-page">
+
+            <!-- HERO -->
+            <section class="terms-hero">
+                <h1>TERMS OF SERVICE</h1>
+                <p class="terms-tagline">
+                    Rules of use for the Xaytheon platform.
+                </p>
+            </section>
+
+            <!-- INTRO -->
+            <section class="terms-section">
+                <p>
+                    These Terms of Service (“Terms”) govern your access to and use of Xaytheon.
+                    By accessing or using the platform, you agree to be bound by these Terms.
+                </p>
+                <p>
+                    If you do not agree with any part of these Terms, you may not use the service.
+                </p>
+            </section>
+
+            <!-- ELIGIBILITY -->
+            <section class="terms-section">
+                <h2>ELIGIBILITY</h2>
+                <p>
+                    You must be at least 13 years old to use Xaytheon. By using the platform,
+                    you represent that you meet this requirement.
+                </p>
+            </section>
+
+            <!-- ACCOUNT & ACCESS -->
+            <section class="terms-section">
+                <h2>ACCOUNTS & ACCESS</h2>
+                <ul>
+                    <li>You are responsible for maintaining the security of your account</li>
+                    <li>You are responsible for all activity that occurs under your account</li>
+                    <li>Authentication may be provided through third-party services (e.g. GitHub)</li>
+                </ul>
+            </section>
+
+            <!-- ACCEPTABLE USE -->
+            <section class="terms-section">
+                <h2>ACCEPTABLE USE</h2>
+                <p>
+                    You agree not to misuse the platform or attempt to disrupt its operation.
+                    Prohibited activities include, but are not limited to:
+                </p>
+                <ul>
+                    <li>Attempting to gain unauthorized access to systems or data</li>
+                    <li>Abusing APIs, rate limits, or automated access</li>
+                    <li>Uploading malicious code or harmful content</li>
+                    <li>Using the service for unlawful purposes</li>
+                </ul>
+            </section>
+
+            <!-- GITHUB DATA -->
+            <section class="terms-section">
+                <h2>GITHUB DATA & INTEGRATIONS</h2>
+                <p>
+                    Xaytheon retrieves and processes GitHub data using official APIs and
+                    in accordance with GitHub’s terms and policies.
+                </p>
+                <p>
+                    You retain ownership of your data. Xaytheon does not claim ownership
+                    over GitHub content analyzed or displayed by the platform.
+                </p>
+            </section>
+
+            <!-- AVAILABILITY -->
+            <section class="terms-section">
+                <h2>SERVICE AVAILABILITY</h2>
+                <p>
+                    Xaytheon is provided on an “as is” and “as available” basis.
+                    Features may change, be suspended, or discontinued at any time
+                    without prior notice.
+                </p>
+            </section>
+
+            <!-- DISCLAIMERS -->
+            <section class="terms-section">
+                <h2>DISCLAIMER OF WARRANTIES</h2>
+                <p>
+                    Xaytheon is provided without warranties of any kind, express or implied.
+                    We do not guarantee accuracy, completeness, or reliability of analytics,
+                    visualizations, or data outputs.
+                </p>
+            </section>
+
+            <!-- LIMITATION OF LIABILITY -->
+            <section class="terms-section">
+                <h2>LIMITATION OF LIABILITY</h2>
+                <p>
+                    To the fullest extent permitted by law, Xaytheon shall not be liable
+                    for any indirect, incidental, or consequential damages resulting
+                    from your use of the platform.
+                </p>
+            </section>
+
+            <!-- TERMINATION -->
+            <section class="terms-section">
+                <h2>TERMINATION</h2>
+                <p>
+                    We reserve the right to suspend or terminate access to Xaytheon
+                    at our discretion, particularly in cases of Terms violations.
+                </p>
+            </section>
+
+            <!-- CHANGES -->
+            <section class="terms-section">
+                <h2>CHANGES TO THESE TERMS</h2>
+                <p>
+                    These Terms may be updated from time to time.
+                    Continued use of the platform constitutes acceptance
+                    of any revised Terms.
+                </p>
+            </section>
+
+            <!-- GOVERNING LAW -->
+            <section class="terms-section">
+                <h2>GOVERNING LAW</h2>
+                <p>
+                    These Terms are governed by and construed in accordance
+                    with applicable laws, without regard to conflict of law principles.
+                </p>
+            </section>
+
+            <!-- CONTACT -->
+            <section class="terms-section">
+                <h2>CONTACT</h2>
+                <p>
+                    For questions regarding these Terms, please contact
+                    <a href="mailto:contact@xaytheon.com">contact@xaytheon.com</a>.
+                </p>
+            </section>
+
+            <!-- FOOTER NOTE -->
+            <section class="terms-footer">
+                <p>
+                    Last updated: <span>January 2026</span>
+                </p>
+            </section>
+
+        </main>
+
+
+        <div id="footer-placeholder"></div>
+        <script src="boilerplate/boilerplate-loader.js"></script>
+
+</body>
+
+</html>

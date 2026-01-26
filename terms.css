@@ -1,0 +1,110 @@
+/* TERMS OF SERVICE PAGE STYLING */
+
+/* Page wrapper */
+.terms-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: "Researcher", "OriginTech", sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* HERO SECTION */
+.terms-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.terms-hero h1 {
+  font-family: "Eightgon", sans-serif;
+  font-size: 2.5rem;
+  color: var(--accent-blue);
+  margin-bottom: 0.5rem;
+}
+
+.terms-hero .terms-tagline {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* TERMS SECTIONS */
+.terms-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.terms-section h2 {
+  font-family: "OriginTech", sans-serif;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.terms-section p {
+  color: var(--text-tertiary);
+  margin-bottom: 1rem;
+}
+
+.terms-section ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  color: var(--text-tertiary);
+}
+
+.terms-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+/* LINKS */
+.terms-section a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.terms-section a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+/* FOOTER NOTE */
+.terms-footer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 2rem;
+}
+
+.terms-footer span {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 768px) {
+  .terms-page {
+    padding: 1rem;
+  }
+
+  .terms-section {
+    padding: 1rem 1.5rem;
+  }
+
+  .terms-hero h1 {
+    font-size: 2rem;
+  }
+
+  .terms-section h2 {
+    font-size: 1.25rem;
+  }
+}
